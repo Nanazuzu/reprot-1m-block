@@ -134,7 +134,7 @@ static int cb(struct nfq_q_handle *qh, struct nfgenmsg *nfmsg,
             printf("ip protocol is %02x\n", ip_hdr->ip_p);
             clock_gettime(CLOCK_MONOTONIC, &end);
             elapsed = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
-            printf("실행 시간: %.9f초\n", elapsed);
+            printf("[Debug]time: %.9fs\n", elapsed);
             return nfq_set_verdict(qh, id, NF_ACCEPT, 0, NULL);
         }
         struct libnet_tcp_hdr* tcp_hdr = (struct libnet_tcp_hdr*)(payload + ip_hdr->ip_hl * 4);
@@ -159,20 +159,20 @@ static int cb(struct nfq_q_handle *qh, struct nfgenmsg *nfmsg,
                     printf("Blocking...\n");
                     clock_gettime(CLOCK_MONOTONIC, &end);
                     elapsed = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
-                    printf("실행 시간: %.9f초\n", elapsed);
+                    printf("[Debug]time: %.9fs\n", elapsed);
                     return nfq_set_verdict(qh, id, NF_DROP, 0, NULL);
                 } else {
                     printf("Not Blocked!\n");
                     clock_gettime(CLOCK_MONOTONIC, &end);
                     elapsed = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
-                    printf("실행 시간: %.9f초\n", elapsed);
+                    printf("[Debug]time: %.9fs\n", elapsed);
                     return nfq_set_verdict(qh, id, NF_ACCEPT, 0, NULL);
                 }
             }
         }
         clock_gettime(CLOCK_MONOTONIC, &end);
         elapsed = (end.tv_sec - start.tv_sec) + (end.tv_nsec - start.tv_nsec) / 1e9;
-        printf("실행 시간: %.9f초\n", elapsed);
+        printf("[Debug]time: %.9fs\n", elapsed);
         return nfq_set_verdict(qh, id, NF_ACCEPT, 0, NULL);
     }
 }
